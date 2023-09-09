@@ -58,5 +58,10 @@ export const stylized = StyleSheet.create({
         fontWeight: '500', 
         fontFamily: 'Lexend_500Medium',
         flexShrink: 1
-    }
+    },
+    chatMessageContent: {
+        fontSize: 13,
+        color: Colors.default.black,
+        fontFamily: 'Lexend_500Medium',
+    },
 })

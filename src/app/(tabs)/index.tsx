@@ -4,11 +4,11 @@ import { RectButton } from 'react-native-gesture-handler';
 import { EvilIcons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { CategoryButton } from '../../components/CategoryButton';
-import { CategoryButtonProps, PetInfo } from '../../constants/types';
-import { PetCard } from '../../components/PetCard';
+import { CategoryButtonProps } from '../../constants/types';
 import { useState } from 'react';
 import { stylized } from '../../constants/styles';
 import { ListPets } from '../../components/ListPets';
+import Onboarding from '../onboarding';
 
 
 
@@ -17,8 +17,8 @@ export default function Home() {
 
   const categories: CategoryButtonProps[] = [
     {
-      title: "Novos",
-      iconName: "star-shooting",
+      title: "Próximos a você",
+      iconName: "map-marker-distance",
       onPress: () => setCategorie('Novos'),
       active: categorie === "Novos"
     },
