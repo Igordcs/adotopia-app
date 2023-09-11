@@ -1,32 +1,18 @@
 import {View, Text, FlatList } from 'react-native'
 import { stylized } from '../../constants/styles'
-import { MessageInfo } from '../../constants/types'
-import { MessageButton } from '../../components/MessageButton'
+import { ChatButton } from '../../components/ChatButton'
+import { useContext, useCallback } from 'react'
+import { chatContext } from '../../contexts/chat/chatContext'
+import { useFocusEffect } from '@react-navigation/native'
 
 export default function Contacts() {
-    const messages: MessageInfo[] = [
-        {
-            id: 1,
-            name: 'Matheus Oliveira',
-            content: 'Matheus.Oliveira@email.com',
-            data: new Date(),
-            userAvatar: 'https://petshopdamadre.com.br/wp-content/uploads/2022/11/125.jpg',
-        },
-        {
-            id: 2,
-            name: 'Matheus Oliveira',
-            content: 'Matheus.Oliveira@email.com',
-            data: new Date(),
-            userAvatar: 'https://4maos.com.br/wp-content/uploads/2022/06/fc69cd2bb55f411f5717eb84419b0ed8.jpg',
-        },
-        {
-            id: 3,
-            name: 'Matheus Oliveira',
-            content: 'Matheus.Oliveira@email.com',
-            data: new Date(),
-            userAvatar: 'https://4maos.com.br/wp-content/uploads/2022/06/fc69cd2bb55f411f5717eb84419b0ed8.jpg',
-        },
-    ]
+    const {chats, getAllChats} = useContext(chatContext);
+
+    useFocusEffect(
+        useCallback(() => {
+            getAllChats()
+        }, [])
+    );
 
     return (
         <View style={stylized.rootContainer}>
@@ -34,9 +20,9 @@ export default function Contacts() {
 
             <View style={{flex: 1}}>
                 <FlatList 
-                    data={messages}   
+                    data={chats}   
                     keyExtractor={(item) => `${item.id}`}
-                    renderItem={({item}) => <MessageButton message={item} />}
+                    renderItem={({item, index}) => <ChatButton chat={item} index={index} />}
                 />
             </View>
         </View>

@@ -4,26 +4,27 @@ import Colors from '../constants/Colors';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
+import { AnimalResponseType } from '../interfaces/animal';
+import { useState } from 'react';
 
-export const PetCard = ({pet}: PetInfoProps) => {
+export const PetCard = ({animal, index}: {animal: AnimalResponseType, index: number}) => {
     return (
-        <Link href={`/petDetails/${pet.petId}`} asChild>
+        <Link href={`/petDetails/${index}`} asChild>
             <Pressable style={styles.container} >
                 <View>
                     <Image 
-                        source={{uri: pet.imageUrl}} 
+                        source={{uri: animal.foto}} 
                         style={{height: 120, width: '100%', borderRadius: 4}}
                         resizeMode='cover'
-                    
                     />
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 4}}>
                     <View>
-                        <Text style={{fontSize: 14, fontWeight: '600', fontFamily: 'Lexend_600SemiBold'}}>
-                            {pet.petName}
+                        <Text style={{fontSize: 14, fontWeight: '600', fontFamily: 'Lexend_600SemiBold'}} numberOfLines={1}>
+                            {animal.name}
                         </Text>
                         <Text style={{fontSize: 12, fontWeight: '600', fontFamily: 'Lexend_600SemiBold', color: Colors.default.textGrey}}>
-                            {pet.petRace}
+                            {animal.raca}
                         </Text>
                     </View>
                     <BorderlessButton 

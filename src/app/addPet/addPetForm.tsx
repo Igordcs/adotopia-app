@@ -1,24 +1,28 @@
 import {View, Text, Pressable, StyleSheet, Animated, ScrollView, Dimensions} from 'react-native';
 import { stylized } from '../../constants/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useState, createRef, useEffect } from 'react';
+import { useState, createRef, useContext } from 'react';
 import Colors from '../../constants/Colors';
 import { FormFirst } from './FormFirst';
 import { FormSecond } from './FormSecond';
 import { FormThird } from './FormThird';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
+import { animalContext } from '../../contexts/animal/animalContext';
 
 export default function AddPetForm() {
+    const {createAnimal} = useContext(animalContext);
     const [currentStep, setCurrentStep] = useState(1);
-    const scrollX = new Animated.Value(0);
 
     const windowWidth = Dimensions.get('screen').width;
     const scrollViewRef = createRef<ScrollView>();
 
-    const handleStepChange = (step) => {
-        if(step < 1 || step > 3)
+    const handleStepChange = (step: number) => {
+        if(step < 1)
             return;
+
+        if(step > 3)
+          return createAnimal();
         setCurrentStep(step);
         scrollViewRef.current?.scrollTo({ x: (step-1) * windowWidth, animated: true });
     };
@@ -26,11 +30,9 @@ export default function AddPetForm() {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: Colors.default.white}}>
             <View style={{paddingHorizontal: 12}}>
-                <Link href={"/(tabs)/addPet"} asChild>
-                    <Pressable>
-                        <MaterialCommunityIcons name='chevron-left' size={32} color={Colors.default.primary}  />
-                    </Pressable> 
-                </Link>
+                <Pressable onPress={() => router.back()}>
+                    <MaterialCommunityIcons name='chevron-left' size={32} color={Colors.default.primary}  />
+                </Pressable> 
                 <View style={{alignSelf: 'flex-start', maxWidth: '60%'}}>
                     <Text style={stylized.titleSemiBold}>
                         Adicionar Pet

@@ -11,7 +11,7 @@ export const ChatMessage = ({text, sender}: {text: string, sender: boolean}) => 
             maxWidth: screenWidth * 0.7,
             padding: 12,
             borderRadius: 12,
-            marginBottom: 12
+            marginTop: 8
         }}>
             <Text style={[stylized.chatMessageContent, {color: sender ? Colors.default.black : Colors.default.white}]}>
                 {text} 

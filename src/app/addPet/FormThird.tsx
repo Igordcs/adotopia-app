@@ -1,17 +1,15 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {View, Pressable, Text, SafeAreaView, StyleSheet} from 'react-native';
-import { stylized } from '../../constants/styles';
-import { FormTextInput } from '../../components/Form/FormTextInput';
-import { FormSelectInput } from '../../components/Form/FormSelectInput';
-import Colors from '../../constants/Colors';
+import { SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {useContext, useState} from 'react';
+import { ComportamentoButton } from '../../components/Form/comportamentoButton';
+import { FormTrueOrFalse } from '../../components/Form/FormTrueOrFalse';
+import { animalContext } from '../../contexts/animal/animalContext';
 import { FormImageInput } from '../../components/Form/FormImageInput';
 
-export function FormThird() {
+export function FormThird() {    
     return (
         <>
             <SafeAreaView style={{flex: 0.8}}>
-                <Text style={styles.labelTitle}>Adicione fotos do pet</Text>
-                <FormImageInput /> 
+                <FormImageInput  />
             </SafeAreaView>
         </>
     )
@@ -23,4 +21,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 12,
     },
+    petAction: {
+        paddingHorizontal: 18,
+        height: 48,
+        borderRadius: 48,
+        marginTop: 8,
+        justifyContent: 'flex-start'
+    }
 })

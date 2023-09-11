@@ -1,13 +1,11 @@
 import { SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import Colors from '../../constants/Colors';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import { ComportamentoButton } from '../../components/Form/comportamentoButton';
-import { FormButtonSelect } from '../../components/Form/FormButtonSelect';
 import { FormTrueOrFalse } from '../../components/Form/FormTrueOrFalse';
-
-
+import { animalContext } from '../../contexts/animal/animalContext';
 
 export function FormSecond() {
+    const {formData, handleInputChange} = useContext(animalContext)
     const [comportamentosSelecionados, setComportamentosSelecionados] = useState<string[]>([]);
 
     const actions = [
@@ -17,14 +15,17 @@ export function FormSecond() {
         { id: 4, actionName: 'Gosta de passear', actionValue: 'Gosta de passear' },
         { id: 5, actionName: 'Inteligente', actionValue: 'Inteligente' },
     ];
-    console.log(comportamentosSelecionados)
 
     const toggleComportamentoSelecionado = (comportamento: string) => {
+        let newComportamentos = comportamentosSelecionados;
         if (comportamentosSelecionados.includes(comportamento)) {
-          setComportamentosSelecionados(comportamentosSelecionados.filter(item => item !== comportamento));
+            newComportamentos = comportamentosSelecionados.filter(item => item !== comportamento)
+            setComportamentosSelecionados(newComportamentos);
         } else {
-          setComportamentosSelecionados([...comportamentosSelecionados, comportamento]);
+            newComportamentos = [...comportamentosSelecionados, comportamento]
+            setComportamentosSelecionados(newComportamentos);
         }
+        handleInputChange('comportamentos', newComportamentos);
       };
     
     return (
@@ -37,11 +38,11 @@ export function FormSecond() {
                     ))}
                 </View>
                 <Text style={styles.labelTitle}>Vermifugado</Text>
-                <FormTrueOrFalse  />
+                <FormTrueOrFalse labelName="vermifugado" setStateValue={handleInputChange} />
                 <Text style={styles.labelTitle}>Vacinado</Text>
-                <FormTrueOrFalse  />
+                <FormTrueOrFalse labelName="vacinado" setStateValue={handleInputChange} />
                 <Text style={styles.labelTitle}>Castrado</Text>
-                <FormTrueOrFalse  />
+                <FormTrueOrFalse labelName="castrado" setStateValue={handleInputChange} />
             </SafeAreaView>
         </>
     )

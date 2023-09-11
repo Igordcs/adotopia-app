@@ -20,7 +20,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Inicio',
           headerShown: false,
@@ -33,6 +33,14 @@ export default function TabLayout() {
           title: 'Doar',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="paw" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="registros"
+        options={{
+          title: 'Registros',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="note-text" color={color} />,
         }}
       />
       <Tabs.Screen

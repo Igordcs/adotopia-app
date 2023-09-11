@@ -1,50 +1,25 @@
-import {View, FlatList} from 'react-native';
+import {View, FlatList, Text} from 'react-native';
 import { PetCard } from './PetCard';
-import { PetInfo } from '../constants/types';
+import { AnimalResponseType } from '../interfaces/animal';
 
-export const ListPets = () => {
-    const petsData: PetInfo[] = [
-        {
-          petId: 1,
-          petName: "Pantero",
-          petRace: "Pitbull",
-          localization: "Garanhuns, PE",
-          imageUrl: "https://petshopdamadre.com.br/wp-content/uploads/2022/11/125.jpg"
-        },
-        {
-          petId: 2,
-          petName: "Pantero",
-          petRace: "Pitbull",
-          localization: "Garanhuns, PE",
-          imageUrl: "https://petshopdamadre.com.br/wp-content/uploads/2022/11/125.jpg"
-        },
-        {
-          petId: 3,
-          petName: "Pantero",
-          petRace: "Pitbull",
-          localization: "Garanhuns, PE",
-          imageUrl: "https://petshopdamadre.com.br/wp-content/uploads/2022/11/125.jpg"
-        },
-        {
-          petId: 4,
-          petName: "Pantero",
-          petRace: "Pitbull",
-          localization: "Garanhuns, PE",
-          imageUrl: "https://petshopdamadre.com.br/wp-content/uploads/2022/11/125.jpg"
-        },
-      ]
+interface ListPetsProps {
+    data: AnimalResponseType[],
+    category?: string
+}
 
+export const ListPets = ({data, category}: ListPetsProps) => {
     return (
         <View style={{flex: 1}}>
             <FlatList
-            data={petsData}
+            alwaysBounceVertical={false}
+            showsVerticalScrollIndicator={false}
+            data={data}
             numColumns={2}
-            keyExtractor={(item) => `${item.petId}`}
-
+            keyExtractor={(item) => `${item.id}`}
             contentContainerStyle={{justifyContent: 'space-between'}}
-            renderItem={({item}) => {
+            renderItem={({item, index}) => {
                 return (
-                <PetCard pet={item} />
+                    <PetCard animal={item} index={index} />
                 )
             }}
             />

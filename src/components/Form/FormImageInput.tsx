@@ -50,7 +50,7 @@ export const FormImageInput = () => {
             </TouchableOpacity>
             <SafeAreaView>
                 <ScrollView horizontal>
-                    {selectedImages.map((item, index) => <ImagePicture key={item.assetId} pickUpImage={() => removeImage(index)} imagem={item} />)}
+                    {selectedImages.map((item, index) => <ImagePicture key={index} pickUpImage={() => removeImage(index)} imagem={item} />)}
                 </ScrollView>
             </SafeAreaView>
         </>

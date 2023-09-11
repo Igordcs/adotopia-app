@@ -5,40 +5,54 @@ import { EvilIcons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { CategoryButton } from '../../components/CategoryButton';
 import { CategoryButtonProps } from '../../constants/types';
-import { useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { stylized } from '../../constants/styles';
 import { ListPets } from '../../components/ListPets';
-import Onboarding from '../onboarding';
+import { animalContext } from '../../contexts/animal/animalContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 
+export default function TabHome() {
+  const {getAllAnimals, animals, getAllAnimalsByEspecie} = useContext(animalContext)
+  const [categorie, setCategorie] = useState('Proximos')
 
-export default function Home() {
-  const [categorie, setCategorie] = useState('Novos')
+  useFocusEffect(
+    useCallback(() => {
+      getAllAnimals()
+    }, [])
+  );
+
+  const handleCategoryChange = (category: string) => {
+    setCategorie(category);
+    if(category == "Proximos")
+      return getAllAnimals();
+    getAllAnimalsByEspecie(category);
+  }
 
   const categories: CategoryButtonProps[] = [
     {
       title: "Próximos a você",
       iconName: "map-marker-distance",
-      onPress: () => setCategorie('Novos'),
-      active: categorie === "Novos"
+      onPress: () => handleCategoryChange("Proximos"),
+      active: categorie === "Proximos"
     },
     {
       title: "Cães",
       iconName: "dog",
-      onPress: () => setCategorie('Cães'),
-      active: categorie === "Cães"
+      onPress: () => handleCategoryChange("CACHORRO"),
+      active: categorie === "CACHORRO"
     },
     {
       title: "Gatos",
       iconName: "cat",
-      onPress: () => setCategorie('Gatos'),
-      active: categorie === "Gatos"
+      onPress: () => handleCategoryChange("GATO"),
+      active: categorie === "GATO"
     },
     {
       title: "Peixes",
       iconName: "fish",
-      onPress: () => setCategorie('Peixes'),
-      active: categorie === "Peixes"
+      onPress: () => handleCategoryChange("PEIXE"),
+      active: categorie === "PEIXE"
     }
   ]
 
@@ -65,7 +79,7 @@ export default function Home() {
         horizontal
         showsHorizontalScrollIndicator={false}
       />
-      <ListPets/>
+      <ListPets data={animals}/>
     </View>
   );
 }

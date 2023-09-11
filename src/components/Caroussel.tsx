@@ -1,6 +1,6 @@
 import {View, Text, Image} from 'react-native'
 
-export const Caroussel = () => {
+export const Caroussel = ({item}: {item: string}) => {
     return (
         <View
             style={{height: '30%'}}
@@ -9,7 +9,7 @@ export const Caroussel = () => {
                 style={{height: '100%'}}
                 resizeMode='cover'
                 source={{
-                    uri: 'https://petshopdamadre.com.br/wp-content/uploads/2022/11/125.jpg'
+                    uri: item
                 }}
             />
         </View>

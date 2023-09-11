@@ -1,10 +1,22 @@
+import {useCallback, useContext} from 'react';
 import {View, Text, StyleSheet, Platform, StatusBar} from 'react-native';
 import Colors from '../../constants/Colors';
 import { stylized } from '../../constants/styles';
 import { ListPets } from '../../components/ListPets';
 import { EmptyPetsState } from '../../components/EmptyPetsState';
+import { animalContext } from '../../contexts/animal/animalContext';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 export default function AddPet() {
+    const {getMyAnimals, myAnimals} = useContext(animalContext);
+
+    useFocusEffect(
+        useCallback(() => {
+            getMyAnimals()
+        }, [])
+    );
+
     return (
         <View style={stylized.rootContainer}>
             {/* <View style={{marginBottom: 24, width: '80%'}}>
@@ -14,12 +26,10 @@ export default function AddPet() {
 
             <View style={{flex: 1}}>
                 <Text style={[stylized.titleSemiBold, {marginBottom: 8}]}>
-                    Meus Pets
+                    Doar Pet
                 </Text>
-
-                {/* <ListPets/> */}
-
-                <EmptyPetsState />
+                {/* <ListPets data={myAnimals}/>  */}
+                <EmptyPetsState/>
             </View>
         </View>
     )

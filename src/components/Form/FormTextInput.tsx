@@ -1,12 +1,25 @@
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet, TextInputProps} from 'react-native';
+import React from 'react';
 import Colors from '../../constants/Colors';
 
-export const FormTextInput = ({labelNome, inputPlaceHolder} : {labelNome: string, inputPlaceHolder: string}) => {
+interface FormTextInput extends TextInputProps {
+    labelNome: string, 
+    inputPlaceHolder: string,
+    value: any,
+    setStateValue: (fieldName: string, fieldValue: any) => void,
+}
+
+export const FormTextInput: React.FC<FormTextInput> = ({labelNome, inputPlaceHolder, value, setStateValue, ...rest} : FormTextInput) => {
     return (
-        <View>
-            <Text style={styles.inputLabel}>{labelNome}</Text>
-            <TextInput style={styles.input} placeholder={inputPlaceHolder}  />
-        </View>
+        <>
+            <TextInput 
+                style={styles.input} 
+                placeholder={inputPlaceHolder} 
+                value={value} 
+                onChangeText={(text: string) => setStateValue(labelNome, text)} 
+                {...rest} 
+            />
+        </>
     )
 }
 

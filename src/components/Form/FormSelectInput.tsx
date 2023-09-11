@@ -1,12 +1,22 @@
-import {Text, StyleSheet, Dimensions, Modal, View, SafeAreaView, FlatList} from "react-native";
+import {Text, StyleSheet, Dimensions, Modal, View, SafeAreaView, FlatList, TouchableOpacity} from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from "../../constants/Colors";
 import { useState } from "react";
 
 const {width} = Dimensions.get("window");
 
-export const FormSelectInput = ({text, options, onChangeSelect, label} : {text: string, options: {id: number, labelName: string, labelValue: string}[], onChangeSelect: any, label: string}) => {
+interface FormSelectInputProps {
+    text: string, 
+    formLabel: string,
+    options: {
+        labelName: string, 
+        labelValue: string
+    }[], 
+    onChangeSelect: (fieldName: string, fieldValue: string) => void, 
+    label: string
+}
+
+export const FormSelectInput = ({text, options, onChangeSelect, label, formLabel} : FormSelectInputProps) => {
     const [txt, setTxt] = useState(text);
     const [selected, setSelected] = useState('');
     const [modalVisible, setModalVisble] = useState(false);
@@ -16,7 +26,7 @@ export const FormSelectInput = ({text, options, onChangeSelect, label} : {text: 
             <TouchableOpacity style={[styles.optionContainer, {
                 backgroundColor: item.id === selected ? Colors.default.grey : Colors.default.white
             }]} onPress={() => {
-                onChangeSelect(item.id)
+                onChangeSelect(formLabel, item.labelValue)
                 setTxt(item.labelName)
                 setSelected(item.id)
                 setModalVisble(false)
@@ -55,7 +65,7 @@ export const FormSelectInput = ({text, options, onChangeSelect, label} : {text: 
                     </View>
                     <FlatList
                         data={options}
-                        keyExtractor={(item) => String(item.id)}
+                        keyExtractor={(item) => String(item.labelValue)}
                         renderItem={({item}) => renderOption(item)}
                     />
                 </SafeAreaView>
